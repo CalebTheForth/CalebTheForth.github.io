@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Poker Game</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #333;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #game {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .card {
+            width: 80px;
+            height: 120px;
+            border: 1px solid #000;
+            margin: 0 5px;
+            padding: 5px;
+            text-align: center;
+            background-color: #fff;
+            font-size: 16px;
+            font-weight: bold;
+        }
+        #message {
+            margin-top: 20px;
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Poker Game</h1>
+        <div id="game">
+            <div id="player-hand"></div>
+            <div id="dealer-hand"></div>
+        </div>
+        <div id="message"></div>
+        <button onclick="dealCards()">Deal Cards</button>
+        <button onclick="exchangeCards()">Exchange Cards</button>
+    </div>
+    <script>
+        const suits = ['Hearts', 'Diamonds', 'Clubs', 'Spades'];
+        const values = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'Jack', 'Queen', 'King', 'Ace'];
+
+        function createDeck() {
+            let deck = [];
+            for (let suit of suits) {
+                for (let value of values) {
+                    deck.push({value, suit});
+                }
+            }
+            return deck;
+        }
+
+        function shuffle(deck) {
+            for (let i = deck.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [deck[i], deck[j]] = [deck[j], deck[i]];
+            }
+        }
+
+        function dealCards() {
+            const playerHand = document.getElementById('player-hand');
+            const dealerHand = document.getElementById('dealer-hand');
+            const message = document.getElementById('message');
+
+            playerHand.innerHTML = '';
+            dealerHand.innerHTML = '';
+            message.textContent = '';
+
+            const deck = createDeck();
+            shuffle(deck);
+
+            // Deal cards to player and dealer
+            const playerCards = [];
+            const dealerCards = [];
+            for (let i = 0; i < 5; i++) {
+                playerCards.push(deck.pop());
+                dealerCards.push(deck.pop());
+            }
+            displayCards(playerHand, playerCards);
+            displayCards(dealerHand, dealerCards);
+            
+            // Evaluate hands
+            const playerHandValue = evaluateHand(playerCards);
+            const dealerHandValue = evaluateHand(dealerCards);
+
+            // Determine winner
+            if (playerHandValue > dealerHandValue) {
+                message.textContent = 'Player wins!';
+            } else if (dealerHandValue > playerHandValue) {
+                message.textContent = 'Dealer wins!';
+            } else {
+                message.textContent = 'It\'s a tie!';
+            }
+        }
+
+        function exchangeCards() {
+            const playerHand = document.getElementById('player-hand');
+            const message = document.getElementById('message');
+
+            if (playerHand.children.length !== 5) {
+                message.textContent = 'You must deal cards first.';
+                return;
+            }
+
+            // Exchange all cards
+            playerHand.innerHTML = '';
+            const deck = createDeck();
+            shuffle(deck);
+            const newCards = [];
+            for (let i = 0; i < 5; i++) {
+                newCards.push(deck.pop());
+            }
+            displayCards(playerHand, newCards);
+
+            // Evaluate new hand
+            const newHandValue = evaluateHand(newCards);
+            message.textContent = `New hand value: ${newHandValue}`;
+        }
+
+        function displayCards(container, cards) {
+            for (let card of cards) {
+                container.innerHTML += `<div class="card">${card.value} of ${card.suit}</div>`;
+            }
+        }
+
+        function evaluateHand(cards) {
+            // Basic evaluation: return sum of card values
+            let sum = 0;
+            for (let card of cards) {
+                if (!isNaN(parseInt(card.value))) {
+                    sum += parseInt(card.value);
+                } else if (card.value === 'Ace') {
+                    sum += 14; // Ace can be high or low
+                } else {
+                    sum += 10; // Face cards
+                }
+            }
+            return sum;
+        }
+    </script>
+</body>
+</html>

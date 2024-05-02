@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Abracadabra Casino Inc - Blackjack</title>
+    <link rel="stylesheet" href="styles.css"> 
+    <style>
+        #gameArea {
+    font-family: 'Arial', sans-serif;
+    margin: 20px;
+    text-align: center;
+    color: #fff; /* Assuming a dark theme for your casino */
+    background-color: #333; /* Dark background for a casino vibe */
+    padding: 20px;
+    border-radius: 8px;
+}
+
+button {
+    padding: 10px 20px;
+    font-size: 16px;
+    color: #fff;
+    background-color: #007BFF;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#dealerCards h2, #playerCards h2, #status {
+    margin-top: 20px;
+}
+    </style>
+</head>
+<body>
+    <header>
+        
+    </header>
+    <div id="gameArea">
+        <button onclick="playerHits()">Hit</button>
+        <button onclick="playerStands()">Stand</button>
+        <button onclick="resetGame()" style="display:none;" id="playAgain">Play Again</button>
+        <div id="dealerCards"><h2>Dealer's Cards:</h2><p></p></div>
+        <div id="playerCards"><h2>Your Cards:</h2><p></p></div>
+        <div id="status"></div>
+    </div>
+
+    <script src="Blackjack.js"></script> 
+</body>
+</html>

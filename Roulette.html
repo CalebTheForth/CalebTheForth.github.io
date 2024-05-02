@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Abracadabra Casino - Roulette</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+    font-family: 'Arial', sans-serif;
+    background-color: #080c1f; /* Dark blue background for a casino feel */
+    color: #fff;
+    text-align: center;
+    margin: 0;
+    padding: 20px;
+}
+
+h1 {
+    color: #ffd700; /* Gold color for headings */
+}
+
+/* Roulette Wheel and Betting Area Styling */
+#roulette {
+    max-width: 600px;
+    margin: 30px auto;
+    padding: 20px;
+    border: 2px solid #ffd700;
+    border-radius: 10px;
+    background-color: #121530; /* Slightly lighter blue for the game area */
+}
+
+#wheel {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #f0ad4e; /* Button color */
+    color: black;
+    border: none;
+    padding: 10px 20px;
+    margin: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: #ffd700; /* Button hover effect */
+}
+
+/* Input field styling */
+input[type="number"] {
+    padding: 10px;
+    width: 100px;
+    border-radius: 5px;
+    border: 1px solid #fff;
+    color: black;
+}
+
+label {
+    color: #fff;
+    margin-right: 10px;
+}
+
+/* Responsive design for smaller screens */
+@media (max-width: 600px) {
+    body, #roulette {
+        padding: 10px;
+    }
+    button {
+        padding: 8px 16px;
+    }
+    h1 {
+        font-size: 1.5em;
+    }
+}
+    </style>
+</head>
+<body>
+    <h1>Abracadabra Casino - Roulette</h1>
+    <div id="roulette">
+        <div id="wheel">
+            <button onclick="spinWheel()">Spin the Wheel</button>
+            <p id="result"></p>
+        </div>
+        <div id="bets">
+            <label for="betNumber">Choose a number (0-36): </label>
+            <input type="number" id="betNumber" min="0" max="36" value="0">
+            <button onclick="placeBet()">Place Bet</button>
+        </div>
+    </div>
+    <script src="roulette.js"></script>
+</body>
+</html>
